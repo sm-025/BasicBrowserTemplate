@@ -2,6 +2,7 @@ package edu.temple.basicbrowser
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.EditText
@@ -25,6 +26,20 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = object: WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
+            }
+        }
+
+        goButton.setOnClickListener{
+            var enteredURL = urlEditText.text
+
+            if (!enteredURL.startsWith("https://")) {
+                Log.d("urlcheck:", enteredURL.toString())
+                var processedURL = StringBuilder()
+                processedURL.append("https://")
+                processedURL.append(enteredURL)
+                Log.d("checking: ", processedURL.toString())
+
+                webView.loadUrl(processedURL.toString())
             }
         }
 
